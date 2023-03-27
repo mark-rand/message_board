@@ -13,6 +13,6 @@ def index():
     # if current_state['type'] == 'text':
     #     display={'type':'text', 'text': current_state['text']}
     cols=[11111111111,22222222222,33333333333]
-    message=[0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2]
+    message=[0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2]*250
     display={'cols': cols, 'message': message}
     return jsonify(display)
