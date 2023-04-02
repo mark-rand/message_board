@@ -26,4 +26,7 @@ def create_app(test_config=None):
     from flaskr import get_next
 
     app.register_blueprint(get_next.bp)
+    
+    from flaskr import get_uuid
+    app.register_blueprint(get_uuid.bp)
     return app

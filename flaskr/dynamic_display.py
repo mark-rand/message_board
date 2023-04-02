@@ -51,7 +51,7 @@ URL="http://192.168.0.2:5050/"
 
 # set the font
 graphics.set_font("bitmap8")
-gu.set_brightness(0.25)
+gu.set_brightness(0.1)
 text("Initialising...", 0, 2)
 gu.update(graphics)
 
@@ -137,10 +137,9 @@ def display_time():
 data=None
 
 def display(tick):
-    offset=tick % len(data['message'])
+    offset=tick % len(data['cols'])
     for column in range(0, width):
-        column_ref = data['message'][(column + offset) % len(data['message'])]
-        column_pixels = str(data['cols'][column_ref])
+        column_pixels = str(data['cols'][column + offset])
         for pixel in range(0, height):
             graphics.set_pen(COLOURS[int(column_pixels[pixel])])
             graphics.pixel(column, pixel)
@@ -165,6 +164,7 @@ while True:
     if mode==0:
         display_time()
         gu.update(graphics)
+        #time.sleep(50)
         data=get_data()
         mode=1
         print(int(time.time()))
@@ -178,5 +178,5 @@ while True:
     else:
         mode=0
     
-    time.sleep(0.01)
+    time.sleep(0.05)
 

@@ -2,14 +2,15 @@ from flask import Blueprint
 from flask import jsonify
 from flask import current_app
 from flask import request
-from flaskr import colours
+from flaskr.colours import *
 from flaskr import fonts
 
-bp = Blueprint('example_blueprint', __name__)
+bp = Blueprint('get_next', __name__)
 
 
 @bp.route('/')
 def index():
+    height=current_app.config['HEIGHT']
     args = request.args
     current_state = int(args.get('state', 0))
     states = current_app.config['STATES']
@@ -19,9 +20,18 @@ def index():
                    'message': current_state['message']}
         return jsonify(display)
     if current_state['type'] == 'text':
-        font = current_state['font'] if 'font' in current_state else '1x11'
+        font = current_state['font'] if 'font' in current_state else 'Px437 Sigma RM 8x8'
+        background=current_state['background'] if 'background' in current_state else WHITE
         cols=[]
-        cols = fonts.append_text(cols, current_state['message'], font)
+        print(current_state)
+        cols = fonts.append_text(cols, current_state['message'], font, background=background)
         display = {'cols': cols, 'message': [1]}
         return jsonify(display)
+    elif current_state['type'] == 'ober':
+        cols=[]
+        for c in range(0,55):
+            cols.append(BLUE * height)
+            cols.append(RED * height)
+        meh = jsonify({'cols':cols})
+        return meh
     return "", 404
