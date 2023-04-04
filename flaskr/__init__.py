@@ -23,9 +23,8 @@ def create_app(test_config=None):
     @app.route("/info")
     def info():
         return "<p>Running</p>"
-    from flaskr import get_next
-
-    app.register_blueprint(get_next.bp)
+    from flaskr import message_controller
+    app.register_blueprint(message_controller.bp)
     
     from flaskr import get_uuid
     app.register_blueprint(get_uuid.bp)

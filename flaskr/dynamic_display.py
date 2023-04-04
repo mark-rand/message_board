@@ -34,6 +34,9 @@ rtc = machine.RTC()
 width = GalacticUnicorn.WIDTH
 height = GalacticUnicorn.HEIGHT
 utc_offset = 1
+mode=0
+data=None
+uuid=""
 
 # set up some pens to use later
 COLOURS = [
@@ -47,7 +50,7 @@ COLOURS = [
     graphics.create_pen(255, 255, 255), # 7, WHITE
     ]
 
-URL="http://192.168.0.2:5050/"
+BASE_URL="http://192.168.0.2:5050/"
 
 # set the font
 graphics.set_font("bitmap8")
@@ -92,24 +95,34 @@ def sync_time():
     
 def get_data():
     # open the json file
+    global uuid
     try:
-        print(f'Requesting URL: {URL}')
-        r = urequests.get(URL)
-        # open the json data
+        if uuid == "":
+            url = f"{BASE_URL}/init?mode=fixed"
+            print(f'Getting url {url}')
+            r = urequests.get(url)
+            j = r.json()
+            uuid = j['id']
+            r.close()
+        url = f"{BASE_URL}/next?id={uuid}"
+        print(f'Requesting URL: {url}')
+        r = urequests.get(url)
+        if r.status_code != 200:
+            print(f'Got error {r.status_code}')
+            return([])
         j = r.json()
-        #print('Data obtained!' + r)
         r.close()
-        return j
+        return j['chunks'][0]
     except Exception as e:
-        print(e)
+        print(f'Got error {e}')
+        uuid=""
+        time.sleep(10)
+        return([])
 
 
 year, month, day, wd, hour, minute, second, _ = rtc.datetime()
 
 last_second = second
-
-# Check whether the RTC time has changed and if so redraw the display
-
 
 def display_time():
     global year, month, day, wd, hour, minute, second, last_second
@@ -134,20 +147,19 @@ def display_time():
 
         last_second = second    
 
-data=None
 
-def display(tick):
-    offset=tick % len(data['cols'])
+def display():
     for column in range(0, width):
-        column_pixels = str(data['cols'][column + offset])
+        column_pixels = str(data[column])
         for pixel in range(0, height):
             graphics.set_pen(COLOURS[int(column_pixels[pixel])])
             graphics.pixel(column, pixel)
+    data.pop(0)
     gu.update(graphics)
+    
 
-mode=0
 sync_time()
-tick=0
+last_time=time.ticks_ms()
 while True:
     print(f"Mem free {gc.mem_free()}")
     if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
@@ -164,19 +176,19 @@ while True:
     if mode==0:
         display_time()
         gu.update(graphics)
-        #time.sleep(50)
         data=get_data()
         mode=1
-        print(int(time.time()))
-    elif mode==1 and data != None:
-        tick=0
-        mode=2
-        display(tick)
-    elif mode==2 and data != None:
-        tick += 1
-        display(tick)
+    elif mode==1 and data:
+        display()
+        print(len(data))
+        if len(data) < width * 2:
+            data.extend(get_data())
     else:
         mode=0
     
-    time.sleep(0.05)
+    current_time=time.ticks_ms()
+    gap=(current_time - last_time)
+    print(f"{last_time} {current_time} Gap: {gap}")
+    time.sleep_ms(150-gap)
+    last_time=current_time
 

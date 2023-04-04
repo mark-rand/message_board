@@ -26,7 +26,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+    """May have problems with the generated height"""
     fonts = {"Px437 Sigma RM 8x8": {'height': 8, 'start': 8, 'end': 0},
              "Px437 ToshibaSat 8x8": {'height': 8, 'start': 8, 'end': 0}, "Px437_HP_100LX_10x11": {'height': 11, 'start': 10, 'end': 1}, "CG Pixel 4x5": {'height':5, 'start': 5, 'end': 0}}
     all_fonts = {}
