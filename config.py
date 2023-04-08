@@ -3912,8 +3912,9 @@ class DefaultConfig(Config):
     MODES = {
         'fixed': [{'type': 'fixed',
                    'repeat': ["1" * 11, "2" * 11, "3" * 11, "3" * 11]},
-                  {'type': 'text', 'message': ' I love you Katie ',
-                      'font': 'Px437_HP_100LX_10x11', 'foreground': [1, 2, 3]},
+                  {'type': 'weather'},
+                  {'type': 'text', 'message': ' Happy Easter Ryan ',
+                   'font': 'Px437_HP_100LX_10x11', 'foreground': [1, 2, 3, 4, 5, 6, 7], 'background': BLACK},
                   {'type': 'news'}
                   ],
         'meh': [{'type': 'text', 'message': '!',

@@ -17,8 +17,10 @@ import ntptime
 from galactic import GalacticUnicorn
 from picographics import PicoGraphics, DISPLAY_GALACTIC_UNICORN as DISPLAY
 import uasyncio
-import urequests
+import async_urequests as urequests
 import gc
+import uasyncio as asyncio
+from uasyncio import Lock
 
 def text(text, x, y):
     graphics.set_pen(COLOURS[7])
@@ -34,9 +36,9 @@ rtc = machine.RTC()
 width = GalacticUnicorn.WIDTH
 height = GalacticUnicorn.HEIGHT
 utc_offset = 1
-mode=0
 data=None
 uuid=""
+buffer=""
 
 # set up some pens to use later
 COLOURS = [
@@ -50,11 +52,11 @@ COLOURS = [
     graphics.create_pen(255, 255, 255), # 7, WHITE
     ]
 
-BASE_URL="http://192.168.0.2:5050/"
+BASE_URL="http://192.168.0.2:5050"
 
 # set the font
 graphics.set_font("bitmap8")
-gu.set_brightness(0.1)
+gu.set_brightness(0.75)
 text("Initialising...", 0, 2)
 gu.update(graphics)
 
@@ -93,31 +95,33 @@ def sync_time():
         pass
 
     
-def get_data():
-    # open the json file
-    global uuid
-    try:
-        if uuid == "":
-            url = f"{BASE_URL}/init?mode=fixed"
-            print(f'Getting url {url}')
-            r = urequests.get(url)
-            j = r.json()
-            uuid = j['id']
-            r.close()
-        url = f"{BASE_URL}/next?id={uuid}"
-        print(f'Requesting URL: {url}')
-        r = urequests.get(url)
-        if r.status_code != 200:
-            print(f'Got error {r.status_code}')
-            return([])
-        j = r.json()
-        r.close()
-        return j['chunks'][0]
-    except Exception as e:
-        print(f'Got error {e}')
-        uuid=""
-        time.sleep(10)
-        return([])
+async def get_data(lock):
+    global uuid, buffer
+    while 1:
+        if len(buffer) < 1:
+            try:
+                if uuid == "":
+                    url = f"{BASE_URL}/init?mode=fixed"
+                    print(f'Getting url {url}')
+                    r = await urequests.get(url)
+                    j = r.json()
+                    uuid = j['id']
+                    r.close()
+                url = f"{BASE_URL}/next?id={uuid}"
+                print(f'Requesting URL: {url}')
+                r = await urequests.get(url)
+                if r.status_code != 200:
+                    print(f'Got error {r.status_code}')
+                j = r.json()
+                r.close()
+                buffer=j['chunks'][0]
+            except ValueError as e:
+                print(f'Got error {e}')
+                uuid=""
+                await asyncio.sleep(10)
+        else:
+            print('Waiting for buffer to be empty')
+            await asyncio.sleep(1)
 
 
 year, month, day, wd, hour, minute, second, _ = rtc.datetime()
@@ -156,39 +160,54 @@ def display():
             graphics.pixel(column, pixel)
     data.pop(0)
     gu.update(graphics)
-    
 
-sync_time()
-last_time=time.ticks_ms()
-while True:
-    print(f"Mem free {gc.mem_free()}")
-    if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
-        gu.adjust_brightness(+0.01)
 
-    if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
-        gu.adjust_brightness(-0.01)
+async def main():
+    global buffer, data
+    lock = Lock()
+    mode=0
+    asyncio.create_task(get_data(lock))
+    sync_time()
+    last_time=time.ticks_ms()
+    while True:
+        #print(f"Mem free {gc.mem_free()}")
+        if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
+            gu.adjust_brightness(+0.01)
 
-    if gu.is_pressed(GalacticUnicorn.SWITCH_A):
-        sync_time()
-    
-    graphics.set_pen(COLOURS[0])
-    graphics.clear()
-    if mode==0:
-        display_time()
-        gu.update(graphics)
-        data=get_data()
-        mode=1
-    elif mode==1 and data:
-        display()
-        print(len(data))
-        if len(data) < width * 2:
-            data.extend(get_data())
-    else:
-        mode=0
-    
-    current_time=time.ticks_ms()
-    gap=(current_time - last_time)
-    print(f"{last_time} {current_time} Gap: {gap}")
-    time.sleep_ms(150-gap)
-    last_time=current_time
+        if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
+            gu.adjust_brightness(-0.01)
 
+        if gu.is_pressed(GalacticUnicorn.SWITCH_A):
+            sync_time()
+        
+        graphics.set_pen(COLOURS[0])
+        graphics.clear()
+        if mode==0:
+            display_time()
+            gu.update(graphics)
+            mode=1
+        elif mode==1:
+            if data and len(data) > width:
+                display()
+            if data and len(data) < width * 2:
+                if len(buffer) > 0:
+                    async with lock:
+                        data.extend(buffer)
+                        buffer = []
+            else:
+                if not data and len(buffer) > 0:
+                    async with lock:
+                        if data:
+                            data.extend(buffer)
+                        else:
+                            data = buffer
+                        buffer = []
+        else:
+            mode=0
+        
+        current_time=time.ticks_ms()
+        gap=(current_time - last_time)
+        await asyncio.sleep_ms(150-gap)
+        last_time=current_time
+
+asyncio.run(main()) 
