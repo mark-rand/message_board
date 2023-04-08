@@ -69,8 +69,8 @@ def process_next_section(uuid):
         cols = fonts.append_text(news_and_weather.get_news(), 'Px437 Sigma RM 8x8', foreground=RED, background=BLACK)
         buffer.extend(cols)
     elif section['type'] == 'weather':
-        location=section['location'] if 'location' in section else '2643743'
-        friendly_name=section['friendly_name'] if 'friendly_name' in section else 'London'
+        location=section['location'] if 'location' in section else '2655642'
+        friendly_name=section['friendly_name'] if 'friendly_name' in section else 'Bingley'
         cols = fonts.append_text(news_and_weather.get_weather(location, friendly_name), 'Px437 Sigma RM 8x8', foreground=RED, background=CYAN)
         buffer.extend(cols)
     elif section['type'] == 'fixed':

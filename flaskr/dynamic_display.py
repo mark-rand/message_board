@@ -1,4 +1,3 @@
-# Clock example with NTP synchronization
 #
 # Create a secrets.py with your Wifi details to be able to get the time
 # when the Galactic Unicorn isn't connected to Thonny.
@@ -7,7 +6,6 @@
 # WIFI_SSID = "Your WiFi SSID"
 # WIFI_PASSWORD = "Your WiFi password"
 #
-# Clock synchronizes time on start, and resynchronizes if you press the A button
 
 import time
 import math
@@ -18,9 +16,9 @@ from galactic import GalacticUnicorn
 from picographics import PicoGraphics, DISPLAY_GALACTIC_UNICORN as DISPLAY
 import uasyncio
 import async_urequests as urequests
-import gc
 import uasyncio as asyncio
 from uasyncio import Lock
+from secrets import BASE_URL
 
 def text(text, x, y):
     graphics.set_pen(COLOURS[7])
@@ -52,7 +50,6 @@ COLOURS = [
     graphics.create_pen(255, 255, 255), # 7, WHITE
     ]
 
-BASE_URL="http://192.168.0.2:5050"
 
 # set the font
 graphics.set_font("bitmap8")
@@ -115,12 +112,12 @@ async def get_data(lock):
                 j = r.json()
                 r.close()
                 buffer=j['chunks'][0]
-            except ValueError as e:
+            except Exception as e:
                 print(f'Got error {e}')
                 uuid=""
                 await asyncio.sleep(10)
         else:
-            print('Waiting for buffer to be empty')
+            # print('Waiting for buffer to be empty')
             await asyncio.sleep(1)
 
 
@@ -169,13 +166,23 @@ async def main():
     asyncio.create_task(get_data(lock))
     sync_time()
     last_time=time.ticks_ms()
+    sleep_time=150
     while True:
-        #print(f"Mem free {gc.mem_free()}")
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
             gu.adjust_brightness(+0.01)
 
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
             gu.adjust_brightness(-0.01)
+
+        if gu.is_pressed(GalacticUnicorn.SWITCH_VOLUME_DOWN):
+            if sleep_time > 25:
+                sleep_time -= 25
+                print(sleep_time)
+
+        if gu.is_pressed(GalacticUnicorn.SWITCH_VOLUME_UP):
+            if sleep_time < 1000:
+                sleep_time += 25
+                print(sleep_time)
 
         if gu.is_pressed(GalacticUnicorn.SWITCH_A):
             sync_time()
@@ -207,7 +214,7 @@ async def main():
         
         current_time=time.ticks_ms()
         gap=(current_time - last_time)
-        await asyncio.sleep_ms(150-gap)
+        await asyncio.sleep_ms(sleep_time - gap)
         last_time=current_time
 
 asyncio.run(main()) 

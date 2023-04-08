@@ -8,6 +8,10 @@ class Config(object):
             "name": "Px437 Sigma RM 8x8",
             "height": 8,
             "characters": {
+                "°": [
+                    " oo     ",
+                    " oo     ",
+                ],
                 "!": [
                     " oo     ",
                     "ooooo o ",

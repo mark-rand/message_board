@@ -11,7 +11,7 @@ def get_news():
     res = conn.getresponse()
     data = res.read()
     root = ET.fromstring(data.decode("utf-8"))
-    news_text=""
+    news_text="News from Sky: "
     for child in root.find('channel').findall('item'):
         title = child.findall('title')[0]
         news_text = news_text + title.text + " ... "
