@@ -30,7 +30,9 @@ You can add fonts and states to the config.py file and of course can change `mes
 
 ## Next steps
 * Run it on the internet - I've only tried it on my local computer so far
+* Clean up any sessions which are unused after a certain period of time
 * Add more colours - initially I decided just to use some basic colours but will try to add support for more colours depending on memory limitations
+* Being able to overlay content onto a "background" which could ultimately be animated
 * Animated sprites - I want to be able to define multiple values for each pixel which can be rotated so that there is some form of animation
 * Improved fonts
   * The fonts aren't great so want to add more fonts and better fonts
@@ -38,6 +40,8 @@ You can add fonts and states to the config.py file and of course can change `mes
   * More font effects e.g. shadow
 * More than scrolling
   * I'd like to be able to support different modes e.g. vertical scrolling or static display
+* Respond to button presses to change the content
+* Link multiple devices together and synchronise using the clock
 * The possibilities are endless!
 
 ## Testing

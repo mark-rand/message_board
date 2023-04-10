@@ -151,8 +151,9 @@ def display_time():
 
 def display():
     for column in range(0, width):
-        column_pixels = str(data[column])
+        column_pixels = data[column]
         for pixel in range(0, height):
+            
             graphics.set_pen(COLOURS[int(column_pixels[pixel])])
             graphics.pixel(column, pixel)
     data.pop(0)
@@ -191,6 +192,7 @@ async def main():
         graphics.clear()
         if mode==0:
             display_time()
+            print(dir(graphics))
             gu.update(graphics)
             mode=1
         elif mode==1:
