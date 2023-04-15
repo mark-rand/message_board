@@ -13,7 +13,7 @@ import machine
 from network_manager import NetworkManager
 import ntptime
 from galactic import GalacticUnicorn
-from picographics import PicoGraphics, DISPLAY_GALACTIC_UNICORN as DISPLAY
+from picographics import PicoGraphics, DISPLAY_GALACTIC_UNICORN as DISPLAY, PEN_RGB332
 import uasyncio
 import async_urequests as urequests
 import uasyncio as asyncio
@@ -26,7 +26,7 @@ def text(text, x, y):
 
 # create galactic object and graphics surface for drawing
 gu = GalacticUnicorn()
-graphics = PicoGraphics(DISPLAY)
+graphics = PicoGraphics(DISPLAY, PEN_RGB332)
 
 # create the rtc object
 rtc = machine.RTC()
@@ -218,5 +218,6 @@ async def main():
         gap=(current_time - last_time)
         await asyncio.sleep_ms(sleep_time - gap)
         last_time=current_time
+
 
 asyncio.run(main()) 
