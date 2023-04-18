@@ -19,14 +19,18 @@ import async_urequests as urequests
 import uasyncio as asyncio
 from uasyncio import Lock
 from secrets import BASE_URL
+import binascii
+import gc
+
 
 def text(text, x, y):
     graphics.set_pen(COLOURS[7])
     graphics.text(text, x, y, -1, 1)
 
+
 # create galactic object and graphics surface for drawing
 gu = GalacticUnicorn()
-graphics = PicoGraphics(DISPLAY, PEN_RGB332)
+graphics = PicoGraphics(DISPLAY, pen_type=PEN_RGB332)
 
 # create the rtc object
 rtc = machine.RTC()
@@ -34,21 +38,21 @@ rtc = machine.RTC()
 width = GalacticUnicorn.WIDTH
 height = GalacticUnicorn.HEIGHT
 utc_offset = 1
-data=None
-uuid=""
-buffer=""
+data = None
+uuid = ""
+buffer = ""
 
 # set up some pens to use later
 COLOURS = [
-    graphics.create_pen(0, 0, 0), # 0, BLACK
-    graphics.create_pen(0, 0, 255), # 1, BLUE
-    graphics.create_pen(255, 0, 0), # 2, RED
-    graphics.create_pen(255, 0, 255), # 3, MAGENTA
-    graphics.create_pen(0, 255, 0), # 4, GREEN
-    graphics.create_pen(0, 255, 255), # 5, CYAN
-    graphics.create_pen(255, 255, 0), # 6, YELLOW
-    graphics.create_pen(255, 255, 255), # 7, WHITE
-    ]
+    graphics.create_pen(0, 0, 0),  # 0, BLACK
+    graphics.create_pen(0, 0, 255),  # 1, BLUE
+    graphics.create_pen(255, 0, 0),  # 2, RED
+    graphics.create_pen(255, 0, 255),  # 3, MAGENTA
+    graphics.create_pen(0, 255, 0),  # 4, GREEN
+    graphics.create_pen(0, 255, 255),  # 5, CYAN
+    graphics.create_pen(255, 255, 0),  # 6, YELLOW
+    graphics.create_pen(255, 255, 255),  # 7, WHITE
+]
 
 
 # set the font
@@ -56,6 +60,7 @@ graphics.set_font("bitmap8")
 gu.set_brightness(0.75)
 text("Initialising...", 0, 2)
 gu.update(graphics)
+
 
 def status_handler(mode, status, ip):
     # reports wifi connection status
@@ -70,11 +75,13 @@ def status_handler(mode, status, ip):
             gu.update(graphics)
             time.sleep(120)
 
+
 try:
     from secrets import WIFI_SSID, WIFI_PASSWORD, COUNTRY
     wifi_available = True
     network_manager = NetworkManager(COUNTRY, status_handler=status_handler)
-    uasyncio.get_event_loop().run_until_complete(network_manager.client(WIFI_SSID, WIFI_PASSWORD))
+    uasyncio.get_event_loop().run_until_complete(
+        network_manager.client(WIFI_SSID, WIFI_PASSWORD))
 except ImportError:
     print("Create secrets.py with your WiFi credentials to get time from NTP")
     wifi_available = False
@@ -91,7 +98,7 @@ def sync_time():
     except OSError:
         pass
 
-    
+
 async def get_data(lock):
     global uuid, buffer
     while 1:
@@ -111,10 +118,10 @@ async def get_data(lock):
                     print(f'Got error {r.status_code}')
                 j = r.json()
                 r.close()
-                buffer=j['chunks'][0]
+                buffer = binascii.a2b_base64(j['chunks'][0])
             except Exception as e:
                 print(f'Got error {e}')
-                uuid=""
+                uuid = ""
                 await asyncio.sleep(10)
         else:
             # print('Waiting for buffer to be empty')
@@ -124,6 +131,7 @@ async def get_data(lock):
 year, month, day, wd, hour, minute, second, _ = rtc.datetime()
 
 last_second = second
+
 
 def display_time():
     global year, month, day, wd, hour, minute, second, last_second
@@ -146,28 +154,47 @@ def display_time():
 
         text(clock, x, y)
 
-        last_second = second    
+        last_second = second
 
 
-def display():
+def string_to_columns(string, height=11):
+    bytes = binascii.a2b_base64(string)
+    columns = []
+    column = []
+    for count, byte in enumerate(bytes):
+        column.append(byte)
+        if (count + 1) % height == 0:
+            columns.append(column)
+            column = []
+    return columns
+
+
+def get_column_at(data, column, height=11):
+    return data[height*column:height + height * column]
+
+
+def discard_first_column(data, height=11):
+    return data[height:]
+
+
+def display(data):
     for column in range(0, width):
-        column_pixels = data[column]
+        column_pixels = get_column_at(data, column)
         for pixel in range(0, height):
-            
-            graphics.set_pen(COLOURS[int(column_pixels[pixel])])
+            graphics.set_pen(column_pixels[pixel])
             graphics.pixel(column, pixel)
-    data.pop(0)
     gu.update(graphics)
+    return discard_first_column(data)
 
 
 async def main():
     global buffer, data
     lock = Lock()
-    mode=0
+    mode = 0
     asyncio.create_task(get_data(lock))
     sync_time()
-    last_time=time.ticks_ms()
-    sleep_time=150
+    last_time = time.ticks_ms()
+    sleep_time = 150
     while True:
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
             gu.adjust_brightness(+0.01)
@@ -187,37 +214,38 @@ async def main():
 
         if gu.is_pressed(GalacticUnicorn.SWITCH_A):
             sync_time()
-        
+
         graphics.set_pen(COLOURS[0])
         graphics.clear()
-        if mode==0:
+        if mode == 0:
             display_time()
-            print(dir(graphics))
             gu.update(graphics)
-            mode=1
-        elif mode==1:
+            mode = 1
+        elif mode == 1:
             if data and len(data) > width:
-                display()
-            if data and len(data) < width * 2:
+                data = display(data)
+                print(len(data))
+            if data and len(data) < width * height * 2:
                 if len(buffer) > 0:
                     async with lock:
-                        data.extend(buffer)
+                        data = data + buffer
                         buffer = []
             else:
                 if not data and len(buffer) > 0:
                     async with lock:
                         if data:
-                            data.extend(buffer)
+                            data = data + buffer
                         else:
                             data = buffer
                         buffer = []
         else:
-            mode=0
-        
-        current_time=time.ticks_ms()
-        gap=(current_time - last_time)
+            mode = 0
+
+        current_time = time.ticks_ms()
+        gap = (current_time - last_time)
+        print(gc.mem_free())
         await asyncio.sleep_ms(sleep_time - gap)
-        last_time=current_time
+        last_time = current_time
 
 
-asyncio.run(main()) 
+asyncio.run(main())

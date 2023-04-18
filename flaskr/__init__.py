@@ -25,7 +25,7 @@ def create_app(test_config=None):
         return "<p>Running</p>"
     from flaskr import message_controller
     app.register_blueprint(message_controller.bp)
-    
+
     from flaskr import get_uuid
     app.register_blueprint(get_uuid.bp)
     return app

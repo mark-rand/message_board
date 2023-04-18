@@ -6,12 +6,11 @@ import re
 def get_news():
     conn = http.client.HTTPSConnection("feeds.skynews.com")
     payload = ""
-    headers = []
     conn.request("GET", "/feeds/rss/home.xml", payload)
     res = conn.getresponse()
     data = res.read()
     root = ET.fromstring(data.decode("utf-8"))
-    news_text="News from Sky: "
+    news_text = "News from Sky: "
     for child in root.find('channel').findall('item'):
         title = child.findall('title')[0]
         news_text = news_text + title.text + " ... "
@@ -21,12 +20,11 @@ def get_news():
 def get_weather(location, friendly_name):
     conn = http.client.HTTPSConnection("weather-broker-cdn.api.bbci.co.uk")
     payload = ""
-    headers = []
     conn.request("GET", f"/en/observation/rss/{location}", payload)
     res = conn.getresponse()
     data = res.read()
     root = ET.fromstring(data.decode("utf-8"))
-    weather=""
+    weather = ""
     for child in root.iter('title'):
         weather = weather + child.text + " ... "
     temp = re.findall("[0-9]+°C", weather)

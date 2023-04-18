@@ -1,4 +1,4 @@
-from flaskr.colours import *
+import flaskr.colours as colours
 
 
 class Config(object):
@@ -3915,11 +3915,11 @@ class Config(object):
 class DefaultConfig(Config):
     MODES = {
         'fixed': [{'type': 'fixed',
-                   'repeat': ["1" * 11, "2" * 11, "3" * 11, "3" * 11]},
+                   'repeat': [[colours.red] * 22, [colours.blue] * 11, [colours.pink] * 11, [colours.green] * 11]},
                   {'type': 'weather'},
                   {'type': 'text', 'message': ' Happy Easter Ryan ',
-                   'font': 'Px437_HP_100LX_10x11', 'foreground': [1, 2, 3, 4, 5, 6, 7], 'background': BLACK},
+                   'font': 'Px437_HP_100LX_10x11', 'foreground': [colours.red, colours.orange, colours.green], 'background': colours.black},
                   {'type': 'news'}
                   ],
         'meh': [{'type': 'text', 'message': '!',
-                 'font': '1x11', 'background': BLACK}], }
+                 'font': '1x11', 'background': colours.black}], }

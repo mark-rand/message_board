@@ -2,12 +2,13 @@ from flask import Blueprint
 from flask import jsonify
 from flask import current_app
 from flask import request
-from flaskr.colours import *
+from flaskr.bin_string_utils import columns_to_string
+import flaskr.colours as colours
 from flaskr import fonts
 from flaskr import news_and_weather
 import uuid
 
-DEFAULT_CHUNK_SIZE = 250
+DEFAULT_CHUNK_SIZE = 120
 bp = Blueprint('message_controller', __name__)
 
 states = {}
@@ -17,7 +18,7 @@ states = {}
 def initialise():
     id = str(uuid.uuid4())
     mode = request.args.get('mode')
-    if not mode in current_app.config['MODES']:
+    if mode not in current_app.config['MODES']:
         return "Unknown mode", 422
     states[id] = initialise_state(mode)
     return jsonify({'id': id})
@@ -39,7 +40,7 @@ def next():
         return "Not found", 404
     chunks = []
     for _ in range(0, chunk_count):
-        chunks.append(get_chunk(uuid, chunk_size))
+        chunks.append(columns_to_string(get_chunk(uuid, chunk_size)))
     return jsonify({'chunks': chunks})
 
 
@@ -60,18 +61,20 @@ def process_next_section(uuid):
     section = modes[this_state['next_section'] % len(modes)]
     if section['type'] == 'text':
         font = section['font'] if 'font' in section else 'Px437 Sigma RM 8x8'
-        background = section['background'] if 'background' in section else WHITE
-        foreground = section['foreground'] if 'foreground' in section else BLUE
+        background = section['background'] if 'background' in section else colours.white
+        foreground = section['foreground'] if 'foreground' in section else colours.blue
         cols = fonts.append_text(
             section['message'], font, background=background, foreground=foreground)
         buffer.extend(cols)
     elif section['type'] == 'news':
-        cols = fonts.append_text(news_and_weather.get_news(), 'Px437 Sigma RM 8x8', foreground=RED, background=BLACK)
+        cols = fonts.append_text(news_and_weather.get_news(
+        ), 'Px437 Sigma RM 8x8', foreground=colours.red, background=colours.black)
         buffer.extend(cols)
     elif section['type'] == 'weather':
-        location=section['location'] if 'location' in section else '2655642'
-        friendly_name=section['friendly_name'] if 'friendly_name' in section else 'Bingley'
-        cols = fonts.append_text(news_and_weather.get_weather(location, friendly_name), 'Px437 Sigma RM 8x8', foreground=RED, background=CYAN)
+        location = section['location'] if 'location' in section else '2655642'
+        friendly_name = section['friendly_name'] if 'friendly_name' in section else 'Bingley'
+        cols = fonts.append_text(news_and_weather.get_weather(
+            location, friendly_name), 'Px437 Sigma RM 8x8', foreground=colours.red, background=colours.cyan)
         buffer.extend(cols)
     elif section['type'] == 'fixed':
         buffer.extend(section['repeat'])
