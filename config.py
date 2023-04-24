@@ -2025,7 +2025,8 @@ class Config(object):
                 "!": [
                     " oo      ",
                     "ooooo oo ",
-                    "ooooo oo "
+                    "ooooo oo ",
+                    " oo      "
                 ],
                 "\"": [
                     "oo       ",
@@ -2625,8 +2626,8 @@ class Config(object):
                 "i": [
                     "  o    o ",
                     "  o    o ",
-                    "oooooooo ",
-                    "oooooooo ",
+                    "o oooooo ",
+                    "o oooooo ",
                     "       o "
                 ],
                 "j": [
@@ -3913,13 +3914,24 @@ class Config(object):
 
 
 class DefaultConfig(Config):
+    a = []
+    for x in range(224, 32, -32):
+        a.append([x]*11)
+        a.insert(0, [x]*11)
     MODES = {
         'fixed': [{'type': 'fixed',
-                   'repeat': [[colours.red] * 22, [colours.blue] * 11, [colours.pink] * 11, [colours.green] * 11]},
-                  {'type': 'weather'},
-                  {'type': 'text', 'message': ' Happy Easter Ryan ',
-                   'font': 'Px437_HP_100LX_10x11', 'foreground': [colours.red, colours.orange, colours.green], 'background': colours.black},
-                  {'type': 'news'}
+                   'repeat': a},
+                    {'type': 'weather'},
+                  #   {'type': 'text', 'message': ' Happy Birthday Katie! ',
+                  #    'font': 'Px437_HP_100LX_10x11', 'foreground': [colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
+                  {'type': 'fixed',
+                   'repeat': [[3] * 11, [2] * 11, [1] * 11, [1] * 11, [1] * 11]},
+                  {'type': 'greeting'},
+                  {'type': 'fixed',
+                   'repeat': [[1] * 11, [2] * 11, [3] * 11, [3] * 11, [3] * 11]},
+                  {'type': 'text', 'message': ' Happy Birthday Katie! ', 'font': 'CG Pixel 4x5', 'foreground': [
+                      colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
+                  #   {'type': 'news'}
                   ],
         'meh': [{'type': 'text', 'message': '!',
                  'font': '1x11', 'background': colours.black}], }

@@ -1,6 +1,9 @@
 from flask import current_app
 import flaskr.colours as colours
 import math
+from flaskr.canvas_array import CanvasArray
+
+ALPHA = -1
 
 
 def get_bg_for_col(background, column):
@@ -14,11 +17,11 @@ def get_padding(total_padding, background, column, round_down=False):
         padding_size = math.floor(total_padding / 2)
     else:
         padding_size = math.ceil(total_padding / 2)
-    return [get_bg_for_col(background, column)] * padding_size
+    return [ALPHA] * padding_size
 
 
 def append_text(text, font_name, foreground=colours.blue, background=colours.white, kerning=1):
-    cols = []
+    canvas = CanvasArray()
     font_def = current_app.config['FONTS'][font_name]
     height = current_app.config['HEIGHT']
     padding_total = height - font_def['height']
@@ -29,10 +32,10 @@ def append_text(text, font_name, foreground=colours.blue, background=colours.whi
             ' ' * font_def['height']] * 3
         for col_count, column in enumerate(char_def):
             this_col = [this_char_colour if pixel ==
-                        'o' else get_bg_for_col(background, col_count) for pixel in column]
-            cols.append(get_padding(padding_total, background, col_count) +
-                        this_col + get_padding(padding_total, background, col_count, True))
+                        'o' else ALPHA for pixel in column]
+            canvas.append(get_padding(padding_total, ALPHA, col_count) +
+                          this_col + get_padding(padding_total, ALPHA, col_count, True))
         if kerning > 0:
             for k_count in range(kerning):
-                cols.append([get_bg_for_col(background, k_count)] * height)
-    return cols
+                canvas.append([ALPHA] * height)
+    return canvas.array_with_bg(background)

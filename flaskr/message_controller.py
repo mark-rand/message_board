@@ -76,6 +76,9 @@ def process_next_section(uuid):
         cols = fonts.append_text(news_and_weather.get_weather(
             location, friendly_name), 'Px437 Sigma RM 8x8', foreground=colours.red, background=colours.greyscale)
         buffer.extend(cols)
+    elif section['type'] == 'greeting':
+        from flaskr.greeting import create_greeting
+        buffer.extend(create_greeting(None))
     elif section['type'] == 'fixed':
         buffer.extend(section['repeat'])
     else:

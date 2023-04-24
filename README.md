@@ -31,6 +31,7 @@ You can add fonts and states to the config.py file and of course can change `mes
 ## Next steps
 * Run it on the internet - I've only tried it on my local computer so far
 * Clean up any sessions which are unused after a certain period of time
+  * Better still - it should be stateless as the sessions won't be preserved over threads
 * Add more colours - initially I decided just to use some basic colours but will try to add support for more colours depending on memory limitations
 * Being able to overlay content onto a "background" which could ultimately be animated
 * Animated sprites - I want to be able to define multiple values for each pixel which can be rotated so that there is some form of animation
@@ -47,3 +48,7 @@ You can add fonts and states to the config.py file and of course can change `mes
 ## Testing
 
 There are some limited unit tests which can be run with pytest in the project's root directory.
+
+## Docker
+
+Run `docker build . -t message_board` followed by `docker run -p 5050:5050 message_board`
