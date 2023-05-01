@@ -4,7 +4,7 @@ class CanvasArray():
 
     def __init__(self, height=11, alpha=-1):
         self.array = []
-        self.height = 11
+        self.height = height
         self.alpha = alpha
 
     def append(self, list_to_append):
@@ -19,6 +19,8 @@ class CanvasArray():
 
     def write_single(self, list_to_write, position):
         if position >= len(self.array):
+            for x in range(len(self.array), position):
+                self.array.append([self.alpha] * self.height)
             self.append(list_to_write)
         else:
             for x in range(len(self.array[position])):

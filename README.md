@@ -21,6 +21,7 @@ In a very basic way, the server will generate enough content to return a buffer 
 <ul>
 <li>BASE_URL - the URL where you're running the Flask APIs</li>
 <li>WIFI_SSID, WIFI_PASSWORD, COUNTRY - Your wifi details and the ISO code for your country e.g. GB</li>
+<li>ORIENTATION - 0 for no rotation, 1 for 180 rotation (I added this so that I could put the cable on the other side of my display)</li>
 </ul>
 <li>Copy the <code>dynamic_display.py</code> file to your Galactic Unicorn</li>
 </ol>
@@ -33,6 +34,7 @@ You can add fonts and states to the config.py file and of course can change `mes
 * Clean up any sessions which are unused after a certain period of time
   * Better still - it should be stateless as the sessions won't be preserved over threads
 * Add more colours - initially I decided just to use some basic colours but will try to add support for more colours depending on memory limitations
+* More accented characters / special characters in fonts
 * Being able to overlay content onto a "background" which could ultimately be animated
 * Animated sprites - I want to be able to define multiple values for each pixel which can be rotated so that there is some form of animation
 * Improved fonts

@@ -4,6 +4,1199 @@ import flaskr.colours as colours
 class Config(object):
     HEIGHT = 11
     FONTS = {
+        "simple_8": {
+            "name": "simple_8",
+            "height": 8,
+            "characters": {
+                "!": [
+                    "ooooo o "
+                ],
+                "\"": [
+                    "o       ",
+                    " oo     ",
+                    "   oo   ",
+                    "     oo "
+                ],
+                "#": [
+                    "   o o  ",
+                    "  ooooo ",
+                    "   o o  ",
+                    "  ooooo ",
+                    "   o o  "
+                ],
+                "$": [
+                    "  o  o  ",
+                    " o oooo ",
+                    "oooo o  ",
+                    " o  o   "
+                ],
+                "%": [
+                    " oo  oo ",
+                    "    o   ",
+                    "   o    ",
+                    " oo  oo "
+                ],
+                "&": [
+                    " oo oo  ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    "  ooooo "
+                ],
+                "'": [
+                    "oo      "
+                ],
+                "(": [
+                    "  ooo   ",
+                    " o   o  ",
+                    "o     o "
+                ],
+                ")": [
+                    "o     o ",
+                    " o   o  ",
+                    "  ooo   "
+                ],
+                "*": [
+                    "  o o o ",
+                    "   ooo  ",
+                    "  o o o "
+                ],
+                "+": [
+                    "    o   ",
+                    "   ooo  ",
+                    "    o   "
+                ],
+                ",": [
+                    "       o",
+                    "     oo "
+                ],
+                "-": [
+                    "    o   ",
+                    "    o   ",
+                    "    o   "
+                ],
+                ".": [
+                    "     oo ",
+                    "     oo "
+                ],
+                "/": [
+                    "     oo ",
+                    "   oo   ",
+                    " oo     ",
+                    "o       "
+                ],
+                "0": [
+                    " ooooo  ",
+                    "o     o ",
+                    "o     o ",
+                    " ooooo  "
+                ],
+                "1": [
+                    " o    o ",
+                    "ooooooo ",
+                    "      o "
+                ],
+                "2": [
+                    " o   oo ",
+                    "o   o o ",
+                    "o  o  o ",
+                    " oo   o "
+                ],
+                "3": [
+                    "o    o  ",
+                    "o  o  o ",
+                    "o oo  o ",
+                    "oo  oo  "
+                ],
+                "4": [
+                    "   oo   ",
+                    " oo o   ",
+                    "o   o   ",
+                    "ooooooo "
+                ],
+                "5": [
+                    "oooo  o ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    "o   oo  "
+                ],
+                "6": [
+                    "  oooo  ",
+                    " o o  o ",
+                    "o  o  o ",
+                    "    oo  "
+                ],
+                "7": [
+                    "o       ",
+                    "o    oo ",
+                    "o  oo   ",
+                    "ooo     "
+                ],
+                "8": [
+                    " oo oo  ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    " oo oo  "
+                ],
+                "9": [
+                    " oo     ",
+                    "o  o  o ",
+                    "o  o o  ",
+                    " oooo   "
+                ],
+                ":": [
+                    "oo  oo  "
+                ],
+                ";": [
+                    "       o",
+                    "  oo oo "
+                ],
+                "<": [
+                    "    o   ",
+                    "   o o  ",
+                    "  o   o "
+                ],
+                "=": [
+                    "   o o  ",
+                    "   o o  ",
+                    "   o o  "
+                ],
+                ">": [
+                    "  o   o ",
+                    "   o o  ",
+                    "    o   "
+                ],
+                "?": [
+                    " o      ",
+                    "o   o o ",
+                    "o  o    ",
+                    " oo     "
+                ],
+                "@": [
+                    " ooooo  ",
+                    "o  o  o ",
+                    "o o o o ",
+                    " oooo o "
+                ],
+                "A": [
+                    " oooooo ",
+                    "o  o    ",
+                    "o  o    ",
+                    " oooooo "
+                ],
+                "B": [
+                    "ooooooo ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    " oo oo  "
+                ],
+                "C": [
+                    " ooooo  ",
+                    "o     o ",
+                    "o     o ",
+                    " o   o  "
+                ],
+                "D": [
+                    "ooooooo ",
+                    "o     o ",
+                    "o     o ",
+                    " ooooo  "
+                ],
+                "E": [
+                    "ooooooo ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    "o     o "
+                ],
+                "F": [
+                    "ooooooo ",
+                    "o  o    ",
+                    "o  o    ",
+                    "o       "
+                ],
+                "G": [
+                    " ooooo  ",
+                    "o     o ",
+                    "o  o  o ",
+                    "o  oooo "
+                ],
+                "H": [
+                    "ooooooo ",
+                    "   o    ",
+                    "   o    ",
+                    "ooooooo "
+                ],
+                "I": [
+                    "o     o ",
+                    "ooooooo ",
+                    "o     o "
+                ],
+                "J": [
+                    "    oo  ",
+                    "      o ",
+                    "      o ",
+                    "oooooo  "
+                ],
+                "K": [
+                    "ooooooo ",
+                    "   o    ",
+                    "  o o   ",
+                    "oo   oo "
+                ],
+                "L": [
+                    "ooooooo ",
+                    "      o ",
+                    "      o ",
+                    "      o "
+                ],
+                "M": [
+                    "ooooooo ",
+                    " o      ",
+                    "  o     ",
+                    " o      ",
+                    "ooooooo "
+                ],
+                "N": [
+                    "ooooooo ",
+                    " o      ",
+                    "  o     ",
+                    "ooooooo "
+                ],
+                "O": [
+                    " ooooo  ",
+                    "o     o ",
+                    "o     o ",
+                    " ooooo  "
+                ],
+                "P": [
+                    "ooooooo ",
+                    "o  o    ",
+                    "o  o    ",
+                    " oo     "
+                ],
+                "Q": [
+                    " ooooo  ",
+                    "o     o ",
+                    "o    o  ",
+                    " oooo o "
+                ],
+                "R": [
+                    "ooooooo ",
+                    "o  o    ",
+                    "o  oo   ",
+                    " oo  oo "
+                ],
+                "S": [
+                    " oo   o ",
+                    "o  o  o ",
+                    "o  o  o ",
+                    "o   oo  "
+                ],
+                "T": [
+                    "o       ",
+                    "o       ",
+                    "ooooooo ",
+                    "o       ",
+                    "o       "
+                ],
+                "U": [
+                    "oooooo  ",
+                    "      o ",
+                    "      o ",
+                    "oooooo  "
+                ],
+                "V": [
+                    "ooooooo ",
+                    "      o ",
+                    "     o  ",
+                    "ooooo   "
+                ],
+                "W": [
+                    "oooooo  ",
+                    "      o ",
+                    "     o  ",
+                    "      o ",
+                    "oooooo  "
+                ],
+                "X": [
+                    "ooo ooo ",
+                    "   o    ",
+                    "   o    ",
+                    "ooo ooo "
+                ],
+                "Y": [
+                    "ooo   o ",
+                    "   o  o ",
+                    "   o  o ",
+                    "oooooo  "
+                ],
+                "Z": [
+                    "o   ooo ",
+                    "o  o  o ",
+                    "o o   o ",
+                    "oo    o "
+                ],
+                "[": [
+                    "ooooooo ",
+                    "o     o "
+                ],
+                "]": [
+                    "o     o ",
+                    "ooooooo "
+                ],
+                "^": [
+                    "  o     ",
+                    " o      ",
+                    "  o     "
+                ],
+                "_": [
+                    "      o ",
+                    "      o ",
+                    "      o "
+                ],
+                "`": [
+                    "o       ",
+                    "o       "
+                ],
+                "a": [
+                    "     o  ",
+                    "  o o o ",
+                    "  o o o ",
+                    "   oooo "
+                ],
+                "b": [
+                    "ooooooo ",
+                    "  o   o ",
+                    "  o   o ",
+                    "   ooo  "
+                ],
+                "c": [
+                    "   ooo  ",
+                    "  o   o ",
+                    "  o   o ",
+                    "   o o  "
+                ],
+                "d": [
+                    "   ooo  ",
+                    "  o   o ",
+                    "  o   o ",
+                    "ooooooo "
+                ],
+                "e": [
+                    "   ooo  ",
+                    "  o o o ",
+                    "  o o o ",
+                    "   oo o "
+                ],
+                "f": [
+                    " oooooo ",
+                    "o  o    ",
+                    "o  o    ",
+                    " o      "
+                ],
+                "g": [
+                    "   oo   ",
+                    "  o  o o",
+                    "  o  o o",
+                    "  ooooo "
+                ],
+                "h": [
+                    "ooooooo ",
+                    "  o     ",
+                    "  o     ",
+                    "   oooo "
+                ],
+                "i": [
+                    "  o     ",
+                    "o ooooo ",
+                    "      o "
+                ],
+                "j": [
+                    "     oo ",
+                    "       o",
+                    "       o",
+                    "o ooooo "
+                ],
+                "k": [
+                    "ooooooo ",
+                    "    o   ",
+                    "   o o  ",
+                    "  o   o "
+                ],
+                "l": [
+                    "o       ",
+                    "ooooooo ",
+                    "      o "
+                ],
+                "m": [
+                    "  ooooo ",
+                    "  o     ",
+                    "   oooo ",
+                    "  o     ",
+                    "   oooo "
+                ],
+                "n": [
+                    "  ooooo ",
+                    "  o     ",
+                    "  o     ",
+                    "   oooo "
+                ],
+                "o": [
+                    "   ooo  ",
+                    "  o   o ",
+                    "  o   o ",
+                    "   ooo  "
+                ],
+                "p": [
+                    "  oooooo",
+                    "  o  o  ",
+                    "  o  o  ",
+                    "   oo   "
+                ],
+                "q": [
+                    "   oo   ",
+                    "  o  o  ",
+                    "  o  o  ",
+                    "  oooooo"
+                ],
+                "r": [
+                    "  ooooo ",
+                    "   o    ",
+                    "  o     ",
+                    "  o     "
+                ],
+                "s": [
+                    "   o  o ",
+                    "  o o o ",
+                    "  o o o ",
+                    "  o  o  "
+                ],
+                "t": [
+                    " ooooo  ",
+                    "  o   o ",
+                    "  o   o ",
+                    "     o  "
+                ],
+                "u": [
+                    "  oooo  ",
+                    "      o ",
+                    "      o ",
+                    "  ooooo "
+                ],
+                "v": [
+                    "  ooooo ",
+                    "      o ",
+                    "     o  ",
+                    "  ooo   "
+                ],
+                "w": [
+                    "  oooo  ",
+                    "      o ",
+                    "     o  ",
+                    "      o ",
+                    "  oooo  "
+                ],
+                "x": [
+                    "  oo oo ",
+                    "    o   ",
+                    "    o   ",
+                    "  oo oo "
+                ],
+                "y": [
+                    "  ooo   ",
+                    "     o o",
+                    "     o o",
+                    "  ooooo "
+                ],
+                "z": [
+                    "  o  oo ",
+                    "  o o o ",
+                    "  oo  o "
+                ],
+                "{": [
+                    "   o    ",
+                    " ooooo  ",
+                    "o     o "
+                ],
+                "|": [
+                    "ooooooo "
+                ],
+                "}": [
+                    "o     o ",
+                    " ooooo  ",
+                    "   o    "
+                ],
+                "~": [
+                    "   o    ",
+                    "  o     ",
+                    "   o    ",
+                    "  o     "
+                ],
+                "Æ": [
+                    " oooooo ",
+                    "o  o    ",
+                    "ooooooo ",
+                    "o  o  o ",
+                    "o  o  o "
+                ],
+                "Þ": [
+                    " oooooo ",
+                    "  o  o  ",
+                    "  o  o  ",
+                    "   oo   "
+                ],
+                "ß": [
+                    " oooooo ",
+                    "o  o    ",
+                    "o  o  o ",
+                    " oo oo  "
+                ],
+                "æ": [
+                    "     o  ",
+                    "  o o o ",
+                    "   oooo ",
+                    "  o o o ",
+                    "   oo o "
+                ],
+                "þ": [
+                    "ooooooo ",
+                    "  o  o  ",
+                    "  o  o  ",
+                    "   oo   "
+                ],
+                "£": [
+                    "   o    ",
+                    " oooooo ",
+                    "o  o  o ",
+                    "o     o "
+                ],
+                "¥": [
+                    "ooo   o ",
+                    "   o  o ",
+                    "   o  o ",
+                    "oooooo  "
+                ],
+                "©": [
+                    "   ooo  ",
+                    "  o   o ",
+                    "  o   o ",
+                    "   o o  "
+                ],
+                "°": [
+                    " o      ",
+                    "o o     ",
+                    " o      "
+                ]
+            }
+        },
+        "simple_6": {
+            "name": "simple_6",
+            "height": 6,
+            "characters": {
+                "!": [
+                    " ooo o"
+                ],
+                "\"": [
+                    " o    ",
+                    "  oo  ",
+                    "    oo"
+                ],
+                "#": [
+                    "  o o ",
+                    " ooooo",
+                    "  o o ",
+                    " ooooo",
+                    "  o o "
+                ],
+                "$": [
+                    "  o   ",
+                    " o o o",
+                    " ooooo",
+                    " o o o",
+                    "    o "
+                ],
+                "%": [
+                    " o   o",
+                    "    o ",
+                    "   o  ",
+                    "  o   ",
+                    " o   o"
+                ],
+                "&": [
+                    "  o o ",
+                    " o o o",
+                    " o o o",
+                    "  oo o",
+                    "    o ",
+                    "   o o"
+                ],
+                "'": [
+                    " oo   "
+                ],
+                "(": [
+                    "  ooo ",
+                    " o   o"
+                ],
+                ")": [
+                    " o   o",
+                    "  ooo "
+                ],
+                "*": [
+                    "  o o ",
+                    "   o  ",
+                    "  o o "
+                ],
+                "+": [
+                    "   o  ",
+                    "  ooo ",
+                    "   o  "
+                ],
+                ",": [
+                    "     oo "
+                ],
+                "-": [
+                    "   o  ",
+                    "   o  ",
+                    "   o  "
+                ],
+                ".": [
+                    "     o"
+                ],
+                "/": [
+                    "    oo",
+                    "  oo  ",
+                    " o    "
+                ],
+                "0": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o",
+                    " oooo "
+                ],
+                "1": [
+                    " o    ",
+                    " ooooo"
+                ],
+                "2": [
+                    " o  oo",
+                    " o o o",
+                    " o o o",
+                    "  o  o"
+                ],
+                "3": [
+                    " o o o",
+                    " o o o",
+                    " o o o",
+                    " oo o "
+                ],
+                "4": [
+                    " ooo  ",
+                    "    o ",
+                    "    o ",
+                    " ooooo",
+                    "    o "
+                ],
+                "5": [
+                    " ooo o",
+                    " o o o",
+                    " o o o",
+                    " o  o "
+                ],
+                "6": [
+                    "  oooo",
+                    " o o o",
+                    " o o o",
+                    " o o o",
+                    " o  o "
+                ],
+                "7": [
+                    " oo   ",
+                    " o    ",
+                    " o   o",
+                    " o  o ",
+                    " ooo  "
+                ],
+                "8": [
+                    "  o o ",
+                    " o o o",
+                    " o o o",
+                    " o o o",
+                    " oo o "
+                ],
+                "9": [
+                    "  o   ",
+                    " o o o",
+                    " o o o",
+                    " o o o",
+                    " oooo "
+                ],
+                ":": [
+                    "  o  o"
+                ],
+                ";": [
+                    "  o  oo "
+                ],
+                "<": [
+                    "   o  ",
+                    "  o o ",
+                    " o   o"
+                ],
+                "=": [
+                    "  o o ",
+                    "  o o ",
+                    "  o o "
+                ],
+                ">": [
+                    " o   o",
+                    "  o o ",
+                    "   o  "
+                ],
+                "?": [
+                    " o    ",
+                    " o o o",
+                    " o o  ",
+                    "  o   "
+                ],
+                "@": [
+                    "  oooo",
+                    " o    ",
+                    " o oo ",
+                    " o o o",
+                    " o   o",
+                    " oooo "
+                ],
+                "A": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooooo"
+                ],
+                "B": [
+                    "  oooo",
+                    " o o o",
+                    " o o o",
+                    " ooo o",
+                    "    o "
+                ],
+                "C": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o"
+                ],
+                "D": [
+                    "  oooo",
+                    " o   o",
+                    " o   o",
+                    " o   o",
+                    "  ooo "
+                ],
+                "E": [
+                    "  oooo",
+                    " o o o",
+                    " o o o",
+                    " o o o"
+                ],
+                "F": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o "
+                ],
+                "G": [
+                    "  oooo",
+                    " o   o",
+                    " o   o",
+                    " o o o",
+                    " o oo "
+                ],
+                "H": [
+                    " ooooo",
+                    "   o  ",
+                    "   o  ",
+                    " ooooo"
+                ],
+                "I": [
+                    " o   o",
+                    " ooooo",
+                    " o   o"
+                ],
+                "J": [
+                    "    oo",
+                    " o   o",
+                    " o   o",
+                    " oooo "
+                ],
+                "K": [
+                    " ooooo",
+                    "   o  ",
+                    "  oo  ",
+                    " o  oo"
+                ],
+                "L": [
+                    " ooooo",
+                    "     o",
+                    "     o",
+                    "     o"
+                ],
+                "M": [
+                    "  oooo",
+                    " o    ",
+                    "  oooo",
+                    " o    ",
+                    "  oooo"
+                ],
+                "N": [
+                    "  oooo",
+                    " o    ",
+                    " o    ",
+                    " o    ",
+                    " ooooo"
+                ],
+                "O": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o",
+                    " oooo "
+                ],
+                "P": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooo  "
+                ],
+                "Q": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   oo ",
+                    " oooo "
+                ],
+                "R": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  oo",
+                    " ooo  "
+                ],
+                "S": [
+                    "  o  o",
+                    " o o o",
+                    " o o o",
+                    " o  o "
+                ],
+                "T": [
+                    " o    ",
+                    " o    ",
+                    " ooooo",
+                    " o    ",
+                    " o    "
+                ],
+                "U": [
+                    " oooo ",
+                    "     o",
+                    "     o",
+                    "     o",
+                    " oooo "
+                ],
+                "V": [
+                    " ooo  ",
+                    "    o ",
+                    "     o",
+                    "    o ",
+                    " ooo  "
+                ],
+                "W": [
+                    " ooooo",
+                    "     o",
+                    " oooo ",
+                    "     o",
+                    " oooo "
+                ],
+                "X": [
+                    " oo oo",
+                    "   o  ",
+                    "   o  ",
+                    " oo oo"
+                ],
+                "Y": [
+                    " oo  o",
+                    "   o o",
+                    "   o o",
+                    " oooo "
+                ],
+                "Z": [
+                    " o  oo",
+                    " o o o",
+                    " o o o",
+                    " oo  o"
+                ],
+                "[": [
+                    " ooooo",
+                    " o   o"
+                ],
+                "]": [
+                    " o   o",
+                    " ooooo"
+                ],
+                "^": [
+                    "  o   ",
+                    " o    ",
+                    "  o   "
+                ],
+                "_": [
+                    "     o",
+                    "     o",
+                    "     o"
+                ],
+                "`": [
+                    " o    ",
+                    "  o   "
+                ],
+                "a": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooooo"
+                ],
+                "b": [
+                    "  oooo",
+                    " o o o",
+                    " o o o",
+                    " ooo o",
+                    "    o "
+                ],
+                "c": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o"
+                ],
+                "d": [
+                    "  oooo",
+                    " o   o",
+                    " o   o",
+                    " o   o",
+                    "  ooo "
+                ],
+                "e": [
+                    "  oooo",
+                    " o o o",
+                    " o o o",
+                    " o o o"
+                ],
+                "f": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o "
+                ],
+                "g": [
+                    "  oooo",
+                    " o   o",
+                    " o   o",
+                    " o o o",
+                    " o oo "
+                ],
+                "h": [
+                    " ooooo",
+                    "   o  ",
+                    "   o  ",
+                    " ooooo"
+                ],
+                "i": [
+                    " o   o",
+                    " ooooo",
+                    " o   o"
+                ],
+                "j": [
+                    "    oo",
+                    " o   o",
+                    " o   o",
+                    " oooo "
+                ],
+                "k": [
+                    " ooooo",
+                    "   o  ",
+                    "  oo  ",
+                    " o  oo"
+                ],
+                "l": [
+                    " ooooo",
+                    "     o",
+                    "     o",
+                    "     o"
+                ],
+                "m": [
+                    "  oooo",
+                    " o    ",
+                    "  oooo",
+                    " o    ",
+                    " ooooo"
+                ],
+                "n": [
+                    "  oooo",
+                    " o    ",
+                    " o    ",
+                    " o    ",
+                    " ooooo"
+                ],
+                "o": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o",
+                    " oooo "
+                ],
+                "p": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooo  "
+                ],
+                "q": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   oo ",
+                    " oooo "
+                ],
+                "r": [
+                    "  oooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  oo",
+                    " ooo  "
+                ],
+                "s": [
+                    " oo  o",
+                    "   o o",
+                    "   o o",
+                    " oooo "
+                ],
+                "t": [
+                    " o    ",
+                    " o    ",
+                    " ooooo",
+                    " o    ",
+                    " o    "
+                ],
+                "u": [
+                    " oooo ",
+                    "     o",
+                    "     o",
+                    "     o",
+                    " oooo "
+                ],
+                "v": [
+                    " ooo  ",
+                    "    o ",
+                    "     o",
+                    "    o ",
+                    " ooo  "
+                ],
+                "w": [
+                    " ooooo",
+                    "     o",
+                    " oooo ",
+                    "     o",
+                    " oooo "
+                ],
+                "x": [
+                    " oo oo",
+                    "   o  ",
+                    "   o  ",
+                    " oo oo"
+                ],
+                "y": [
+                    " oo  o",
+                    "   o o",
+                    "   o o",
+                    " oooo "
+                ],
+                "z": [
+                    " o  oo",
+                    " o o o",
+                    " o o o",
+                    " oo  o"
+                ],
+                "{": [
+                    "   o  ",
+                    " ooooo",
+                    " o   o"
+                ],
+                "|": [
+                    " ooooo"
+                ],
+                "}": [
+                    " o   o",
+                    " ooooo",
+                    "   o  "
+                ],
+                "~": [
+                    "  o   ",
+                    " o    ",
+                    " o    "
+                ],
+                "Æ": [
+                    "  oooo",
+                    " o  o ",
+                    "  oooo",
+                    " o o o",
+                    " o o o"
+                ],
+                "Þ": [
+                    "oooooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooo  "
+                ],
+                "ß": [
+                    " ooooo",
+                    " o o  ",
+                    " o o o",
+                    "  o oo"
+                ],
+                "æ": [
+                    "  oooo",
+                    " o  o ",
+                    "  oooo",
+                    " o o o",
+                    " o o o"
+                ],
+                "þ": [
+                    "oooooo",
+                    " o  o ",
+                    " o  o ",
+                    " o  o ",
+                    " ooo  "
+                ],
+                "£": [
+                    "   o  ",
+                    "  oooo",
+                    " o o o",
+                    " o o o"
+                ],
+                "©": [
+                    "  ooo ",
+                    " o   o",
+                    " o   o",
+                    " o   o"
+                ],
+                "°": [
+                    " o    ",
+                    "o o   ",
+                    " o    "
+                ]
+            }
+        },
+
         "Px437 Sigma RM 8x8": {
             "name": "Px437 Sigma RM 8x8",
             "height": 8,
@@ -3919,19 +5112,19 @@ class DefaultConfig(Config):
         a.append([x]*11)
         a.insert(0, [x]*11)
     MODES = {
-        'fixed': [{'type': 'fixed',
-                   'repeat': a},
-                    {'type': 'weather'},
-                  #   {'type': 'text', 'message': ' Happy Birthday Katie! ',
-                  #    'font': 'Px437_HP_100LX_10x11', 'foreground': [colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
-                  {'type': 'fixed',
-                   'repeat': [[3] * 11, [2] * 11, [1] * 11, [1] * 11, [1] * 11]},
-                  {'type': 'greeting'},
-                  {'type': 'fixed',
-                   'repeat': [[1] * 11, [2] * 11, [3] * 11, [3] * 11, [3] * 11]},
-                  {'type': 'text', 'message': ' Happy Birthday Katie! ', 'font': 'CG Pixel 4x5', 'foreground': [
-                      colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
-                  #   {'type': 'news'}
-                  ],
+        'fixed': [  # {'type': 'fixed',
+            # 'repeat': a},
+            #   {'type': 'weather'},
+            #   {'type': 'greeting'},
+            {'type': 'fixed',
+             'repeat': [[1] * 11, [2] * 11, [3] * 11, [3] * 11, [3] * 11]},
+            #   {'type': 'text', 'message': ' Happy Birthday ', 'font': 'simple_6', 'foreground': [
+            #   colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
+            {'type': 'text', 'message': ' Happy Birthday Katie! ', 'font': 'simple_8', 'foreground': [
+                colours.red, colours.orange, colours.yellow, colours.green, colours.indigo, colours.violet], 'background': colours.black},
+            {'type': 'fixed',
+             'repeat': [[3] * 11, [2] * 11, [1] * 11, [1] * 11, [1] * 11]},
+            #   {'type': 'news'}
+        ],
         'meh': [{'type': 'text', 'message': '!',
                  'font': '1x11', 'background': colours.black}], }

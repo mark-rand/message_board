@@ -18,9 +18,8 @@ import uasyncio
 import async_urequests as urequests
 import uasyncio as asyncio
 from uasyncio import Lock
-from secrets import BASE_URL
+from secrets import BASE_URL, ORIENTATION
 import binascii
-import gc
 
 
 def text(text, x, y):
@@ -177,12 +176,17 @@ def discard_first_column(data, height=11):
     return data[height:]
 
 
-def display(data):
+def display(data, orientation):
     for column in range(0, width):
         column_pixels = get_column_at(data, column)
         for pixel in range(0, height):
             graphics.set_pen(column_pixels[pixel])
-            graphics.pixel(column, pixel)
+            x = column
+            y = pixel
+            if orientation == 1:
+                x = width - x - 1
+                y = height - y - 1
+            graphics.pixel(x, y)
     gu.update(graphics)
     return discard_first_column(data)
 
@@ -194,7 +198,8 @@ async def main():
     asyncio.create_task(get_data(lock))
     sync_time()
     last_time = time.ticks_ms()
-    sleep_time = 150
+    sleep_time = 100
+    orientation = ORIENTATION
     while True:
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
             gu.adjust_brightness(+0.01)
@@ -213,6 +218,9 @@ async def main():
                 print(sleep_time)
 
         if gu.is_pressed(GalacticUnicorn.SWITCH_A):
+            orientation = int(not orientation)
+
+        if gu.is_pressed(GalacticUnicorn.SWITCH_B):
             sync_time()
 
         graphics.set_pen(COLOURS[0])
@@ -223,7 +231,7 @@ async def main():
             mode = 1
         elif mode == 1:
             if data and len(data) > width:
-                data = display(data)
+                data = display(data, orientation)
                 print(len(data))
             if data and len(data) < width * height * 2:
                 if len(buffer) > 0:
@@ -243,7 +251,6 @@ async def main():
 
         current_time = time.ticks_ms()
         gap = (current_time - last_time)
-        print(gc.mem_free())
         await asyncio.sleep_ms(sleep_time - gap)
         last_time = current_time
 

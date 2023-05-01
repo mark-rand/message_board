@@ -33,3 +33,10 @@ def test_add_background():
     ca.write([[-1, 3], [-1, 4]], len(ca.array))
     assert ca.array == [[-1, 1], [-1, 2], [-1, 3], [-1, 4]]
     assert ca.array_with_bg([9, 8, 7]) == [[9, 1], [8, 2], [7, 3], [9, 4]]
+
+
+def test_write_beyond_current():
+    ca = CanvasArray(height=3)
+    ca.write([1, 2, 3], 3)
+    assert len(ca.array) == 4
+    assert ca.array == [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [1, 2, 3]]
