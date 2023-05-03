@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify
 
 
 def create_app(test_config=None):
@@ -14,6 +14,15 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
+    if not ('FONT_OVERRIDE' in app.config and app.config['FONT_OVERRIDE']):
+        from flaskr import font_definitions
+        app.config['FONTS'] = font_definitions.FONTS
+
+    # register the database commands
+    from flaskr import db
+
+    db.init_app(app)
+
     @app.route('/favicon.ico')
     def favicon():
         print(app.root_path)
@@ -22,7 +31,9 @@ def create_app(test_config=None):
 
     @app.route("/info")
     def info():
-        return "<p>Running</p>"
+        info = {'running': True, 'test_mode': app.config['TESTING'], 'font_count': len(
+            app.config['FONTS']), 'debug_mode': app.debug}
+        return jsonify(info)
     from flaskr import message_controller
     app.register_blueprint(message_controller.bp)
 

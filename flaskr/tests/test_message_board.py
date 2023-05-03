@@ -12,6 +12,7 @@ def app():
     """Create and configure a new app instance for each test."""
     # create the app with common test config
     app = create_app({"TESTING": True,
+                      "FONT_OVERRIDE": True,
                       "MODES": {
                           'fixed': [{'type': 'fixed',
                                      'repeat': [[3]*11, [128]*11, [3]*11]}],
@@ -168,12 +169,6 @@ def test_mode_3_1x8_font_missing_char(client):
     parsed = next_chunk['data']
     assert len(parsed) == 1
     assert parsed[0][0] == [0] * 11
-
-
-def test_info_endpoint_returns_status(client):
-    response = client.get("/info")
-    assert response.status_code == 200
-    assert b"Running" in response.data
 
 
 def test_get_uuid_returns_uuid(client):

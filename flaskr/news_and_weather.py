@@ -28,7 +28,7 @@ def get_weather(location, friendly_name):
     for child in root.iter('title'):
         weather = weather + child.text + " ... "
     temp = re.findall("[0-9]+°C", weather)
-    formatted_weather = f"Current Temp. in {friendly_name}: {temp[0]}"
+    formatted_weather = f"  Current Temp. in {friendly_name}: {temp[0]}  "
     return formatted_weather
 
 

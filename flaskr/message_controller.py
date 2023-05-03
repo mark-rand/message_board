@@ -78,7 +78,10 @@ def process_next_section(uuid):
         buffer.extend(cols)
     elif section['type'] == 'greeting':
         from flaskr.greeting import create_greeting
-        buffer.extend(create_greeting(None))
+        if 'timezone' in section:
+            buffer.extend(create_greeting(None, timezone=section['timezone']))
+        else:
+            buffer.extend(create_greeting(None))
     elif section['type'] == 'fixed':
         buffer.extend(section['repeat'])
     else:

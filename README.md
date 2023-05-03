@@ -44,6 +44,7 @@ You can add fonts and states to the config.py file and of course can change `mes
 * More than scrolling
   * I'd like to be able to support different modes e.g. vertical scrolling or static display
 * Respond to button presses to change the content
+* Write some non-blocking SSL code? Currently you can't really host via https as you get really poor performance
 * Link multiple devices together and synchronise using the clock
 * The possibilities are endless!
 

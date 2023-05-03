@@ -1,7 +1,8 @@
-import time
+from datetime import datetime
 from enum import Enum
 from flaskr.fonts import append_text
 import flaskr.colours as colours
+from zoneinfo import ZoneInfo
 
 
 class TimeOfDay(Enum):
@@ -15,7 +16,7 @@ greetings = {TimeOfDay.MORNING: 'morning',
 
 
 def get_day_segment(now):
-    hour = int(time.strftime('%H', now))
+    hour = int(now.strftime('%H'))
 
     if (hour >= 0 and hour < 12):
         return TimeOfDay.MORNING
@@ -25,14 +26,16 @@ def get_day_segment(now):
         return TimeOfDay.EVENING
 
 
-def create_greeting(now):
+def create_greeting(now, timezone=None):
     if not now:
-        now = time.localtime()
+        now = datetime.now()
+    if timezone:
+        now = now.astimezone(ZoneInfo(timezone))
     time_of_day = get_day_segment(now)
-    time_str = time.strftime('%H:%M', now)
-    day_of_month = time.strftime('%d', now)
+    time_str = now.strftime('%H:%M')
+    day_of_month = str(int(now.strftime('%d')))
     day_str = f'{day_of_month}{ordinal_suffix(int(day_of_month))}'
-    greeting = f'Good {greetings[time_of_day]}, it is {time_str} on {day_str} {time.strftime("%B", now)}'
+    greeting = f'Good {greetings[time_of_day]}, it is {time_str} on {day_str} {now.strftime("%B")}'
     return append_text(greeting, 'CG Pixel 4x5', background=1, foreground=colours.coral)
 
 
