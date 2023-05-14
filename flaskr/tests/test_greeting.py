@@ -21,14 +21,20 @@ def test_greetings():
 
 @patch('flaskr.greeting.append_text')
 def test_create_greeting(test_patch):
+    time_tuple = datetime(2022, 1, 2, 11, 59, 59, 4)
+    create_greeting(time_tuple)
+    test_patch.assert_called_with(' Good morning, it is 11:59 on 2nd January ', 'CG Pixel 4x5', background=1, foreground=237)
+    time_tuple = datetime(2022, 1, 1, 11, 59, 59, 4)
+    create_greeting(time_tuple)
+    test_patch.assert_called_with(' Happy New Year! It is 11:59 on 1st January ', 'CG Pixel 4x5', background=1, foreground=237)
     time_tuple = datetime(2022, 12, 28, 16, 59, 59, 4)
     create_greeting(time_tuple)
-    test_patch.assert_called_with('Good afternoon, it is 16:59 on 28th December', 'CG Pixel 4x5', background=1, foreground=237)
-    time_tuple = datetime(2022, 1, 1, 16, 59, 59, 4, tzinfo=ZoneInfo('Europe/Berlin'))
+    test_patch.assert_called_with(' Good afternoon, it is 16:59 on 28th December ', 'CG Pixel 4x5', background=1, foreground=237)
+    time_tuple = datetime(2022, 1, 3, 16, 59, 59, 4, tzinfo=ZoneInfo('Europe/Berlin'))
     create_greeting(time_tuple)
-    test_patch.assert_called_with('Good afternoon, it is 16:59 on 1st January', 'CG Pixel 4x5', background=1, foreground=237)
+    test_patch.assert_called_with(' Good afternoon, it is 16:59 on 3rd January ', 'CG Pixel 4x5', background=1, foreground=237)
     create_greeting(time_tuple, "Europe/London")
-    test_patch.assert_called_with('Good afternoon, it is 15:59 on 1st January', 'CG Pixel 4x5', background=1, foreground=237)
+    test_patch.assert_called_with(' Good afternoon, it is 15:59 on 3rd January ', 'CG Pixel 4x5', background=1, foreground=237)
 
 
 def test_ordinal_suffix():

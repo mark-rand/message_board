@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, send_from_directory, jsonify
 
 
@@ -13,6 +12,11 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
+
+    if not app.config['TESTING']:
+        app.config['DATABASE'] = os.environ.get("DATABASE")
+        if not app.config['DATABASE']:
+            raise ValueError("No DATABASE set for Flask application")
 
     if not ('FONT_OVERRIDE' in app.config and app.config['FONT_OVERRIDE']):
         from flaskr import font_definitions
@@ -39,4 +43,8 @@ def create_app(test_config=None):
 
     from flaskr import get_uuid
     app.register_blueprint(get_uuid.bp)
+
+    from flaskr import mode_management
+    app.register_blueprint(mode_management.bp)
+
     return app

@@ -35,7 +35,10 @@ def create_greeting(now, timezone=None):
     time_str = now.strftime('%H:%M')
     day_of_month = str(int(now.strftime('%d')))
     day_str = f'{day_of_month}{ordinal_suffix(int(day_of_month))}'
-    greeting = f'Good {greetings[time_of_day]}, it is {time_str} on {day_str} {now.strftime("%B")}'
+    prefix = f'Good {greetings[time_of_day]}, it is'
+    if day_of_month == "1" and now.strftime('%m') == "01":
+        prefix = 'Happy New Year! It is'
+    greeting = f' {prefix} {time_str} on {day_str} {now.strftime("%B")} '
     return append_text(greeting, 'CG Pixel 4x5', background=1, foreground=colours.coral)
 
 

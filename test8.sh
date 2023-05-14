@@ -1,5 +1,15 @@
 #!/bin/sh
-# Runs pytest watcher and then flake8 after a pass
+
+export PYTHONPATH=`pwd`
+
+cleanup() {
+    echo "Cleaning stuff up..."
+    exit
+}
+
+trap cleanup INT TERM
+
+# Runs pytest and then flake8 after a pass
 while :; do
    pytest
    if [ $? -eq 0 ]; then
@@ -9,5 +19,5 @@ while :; do
       fi
    fi
    date
-   watch -n1 -g find . -type f -ls > /dev/null 2>&1
+   watch -n1 -g "find . -type f -ls | sum" > /dev/null 2>&1
 done

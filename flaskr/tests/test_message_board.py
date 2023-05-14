@@ -2,54 +2,14 @@
 import pytest
 import json
 
-from flaskr import create_app
 import flaskr.colours as colours
 from flaskr.bin_string_utils import discard_first_column, get_column_at, string_to_columns, columns_to_string, string_to_bin
 
 
 @pytest.fixture
-def app():
-    """Create and configure a new app instance for each test."""
-    # create the app with common test config
-    app = create_app({"TESTING": True,
-                      "FONT_OVERRIDE": True,
-                      "MODES": {
-                          'fixed': [{'type': 'fixed',
-                                     'repeat': [[3]*11, [128]*11, [3]*11]}],
-                          'exclaim_1x11': [{'type': 'text', 'message': '!',
-                                           'font': '1x11', 'background': colours.black}],
-                          'exclaim_1x8': [{'type': 'text', 'message': '!',
-                                          'font': '1x8', 'background': colours.black}],
-                          'simple_multi': [{'type': 'text', 'message': 'x',
-                                            'font': '1x8', 'background': colours.black}, {'type': 'text', 'message': 'z',
-                                                                                          'font': '1x8', 'background': colours.black}],
-                          'space_1x8': [{'type': 'text', 'message': ' ',
-                                        'font': '1x8', 'background': colours.black}],
-                      },
-                      "FONTS": {
-                          "1x11": {
-                              "name": "1x8", "height": 11,
-                              "characters": {
-                                  "!": ["   oooo    "]
-                              }
-                          },
-                          "1x8": {
-                              "name": "1x8", "height": 8,
-                              "characters": {
-                                  "!": ["  oo    "],
-                                  "x": ["oooooooo"],
-                                  "z": ["  o o   "],
-                              }
-                          }
-                      }
-                      })
-    yield app
-
-
-@pytest.fixture
-def client(app):
+def client(db_app):
     """A test client for the app."""
-    return app.test_client()
+    return db_app.test_client()
 
 
 def initialise(client, mode):
@@ -62,7 +22,7 @@ def initialise(client, mode):
 
 def test_state_invalid(client):
     response = client.get("/next")
-    assert response.status_code == 422
+    assert response.status_code == 404
 
 
 def test_state_not_found(client):
@@ -82,7 +42,6 @@ def test_mode_fixed(client):
     next_chunk = get_next_chunk(client, uuid, size)
     assert next_chunk['status_code'] == 200
     parsed = next_chunk['data']
-    print(f'PARSED {parsed}')
     assert len(parsed) == 1
     assert len(parsed[0]) == size
     assert parsed[0] == [[3]*11, [128]*11]
